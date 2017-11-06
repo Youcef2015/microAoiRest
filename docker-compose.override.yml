@@ -1,0 +1,42 @@
+version: '2'
+services:
+    proxy:
+        ports:
+            - 80:80
+            - 443:443
+
+    api:
+        ports:
+            - 4430:443
+            - 8000:80
+        environment:
+            VIRTUAL_HOST: api.docker
+
+    mail:
+        ports:
+            - 1080:80
+        environment:
+            VIRTUAL_HOST: mail.docker
+
+    es:
+        ports:
+            - 9300:9300
+            - 9200:9200
+        environment:
+            VIRTUAL_HOST: es.docker
+
+    database:
+        ports:
+            - 3306:3306
+
+    phpmyadmin:
+        ports:
+            - 8080:80
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            PMA_HOST: database
+            VITRUAL_HOST: phpmyadmin.docker
+
+    redis-db:
+        ports:
+            - 6379:6379

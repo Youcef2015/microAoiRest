@@ -1,0 +1,80 @@
+version: '2'
+services:
+    proxy:
+        image: jwilder/nginx-proxy
+        container_name: micro-service-proxy
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        environment:
+            CERT_NAME: api.docker
+
+    mail:
+        image: djfarrelly/maildev
+        container_name: micro-service-mail
+        networks:
+            - default
+
+    nginx:
+        build: docker/nginx
+        ports:
+          - "8080:80"
+        links:
+          - php
+        volumes:
+          - ./:/app
+    php:
+        image: php:7.0-fpm
+        volumes:
+          - ./:/app
+        working_dir: /app
+
+    api:
+        build: docker/php
+        image: box/api
+        container_name: micro-service-api
+        networks:
+            - default
+        volumes:
+            - ./api:/var/www/app
+
+    es:
+        image: elasticsearch:1.7
+        container_name: micro-service-elasticsearch
+        networks:
+            - default
+
+    database:
+        image: mariadb
+        container_name: micro-service-database
+        networks:
+            - default
+        volumes:
+            - database:/var/lib/mariadb:rw
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: microservice
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: micro-service-phpmyadmin
+        networks:
+            - default
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+
+    redis-db:
+        image: redis
+        container_name: micro-service-redis
+        networks:
+            - default
+        volumes:
+            - redis:/data
+
+networks:
+    default: {}
+
+volumes:
+    database: {}
+    redis: {}

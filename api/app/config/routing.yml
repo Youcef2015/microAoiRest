@@ -1,0 +1,20 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+places:
+    type:     rest
+    resource: AppBundle\Controller\UserController
+
+auth-tokens:
+    type:     rest
+    resource: AppBundle\Controller\AuthTokenController
+
+
+consultant:
+    type:     rest
+    resource: AppBundle\Controller\ConsultantController
+
+countries:
+    type:     rest
+    resource: AppBundle\Controller\CountryController
