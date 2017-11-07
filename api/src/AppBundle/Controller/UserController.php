@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations as Rest;;
 use AppBundle\Entity\Place;
 
 class UserController extends Controller
@@ -44,23 +44,15 @@ class UserController extends Controller
 
     /**
      * @Get("/users")
+     * @View(serializerGroups={"Default","Details"})
      */
     public function getUsersAction()
     {
         $users = $this->get('doctrine.orm.entity_manager')
                        ->getRepository('AppBundle:User')
                        ->findAll();
-        /* @var $user User[] */
 
-        $formatted = [];
-        foreach ($users as $user) {
-            $formatted[] = [
-                'id' => $user->getId(),
-                'email' => $user->getEmail()
-            ];
-        }
-
-        return new JsonResponse($formatted);
+        return $users;
     }
 
     /**

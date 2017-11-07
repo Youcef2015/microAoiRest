@@ -2,8 +2,9 @@ AppBundle\Entity\Country:
     exclusion_policy: none
     properties:
         id:
-            groups: ['country']
+            expose: true
+            groups : [Details]
         code:
-            groups: ['country']
+            expose: true
         label:
-            groups: ['country']
+            expose: true

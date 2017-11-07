@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller;
 use AppBundle\Entity\Country;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;;
+use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les anno
 class CountryController extends Controller
 {
     /**
+     * @View(serializerGroups={"Default","Details"})
      * @Get("/countries")
      */
     public function getCountriesAction()
@@ -28,15 +30,7 @@ class CountryController extends Controller
                             ->findAll();
         /* @var $country Country[] */
 
-        $formatted = [];
-        foreach ($countries as $country) {
-            $formatted[] = [
-                'id' => $country->getId(),
-                'code' => $country->getCode(),
-                'label' => $country->getLabel()
-            ];
-        }
 
-        return new JsonResponse($formatted);
+        return $countries;
     }
 }

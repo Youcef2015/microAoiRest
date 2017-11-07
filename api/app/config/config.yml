@@ -7,6 +7,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
 
 framework:
     #esi: ~
@@ -33,7 +34,7 @@ framework:
     php_errors:
         log: true
     serializer:
-        enabled: true
+        enabled: false
 
 # Twig Configuration
 twig:
@@ -70,6 +71,8 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 fos_rest:
+    serializer:
+        serialize_null:  true
     routing_loader:
         include_format: false
     view:
@@ -103,3 +106,10 @@ nelmio_cors:
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
             hosts: ['^api\.']
+jms_serializer:
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        auto_detection: true

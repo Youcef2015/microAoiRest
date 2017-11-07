@@ -1,0 +1,12 @@
+AppBundle\Entity\User:
+    exclusion_policy: none
+    properties:
+        id:
+            expose: true
+            groups : [Details]
+        firstname:
+            expose: true
+        lastname:
+            expose: true
+        email:
+            expose: true

@@ -9,12 +9,17 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\RestBundle\Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="users",
  *      uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})}
  * )
+ * @ExclusionPolicy("all")
  */
 class User implements UserInterface
 {
@@ -23,32 +28,38 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @Expose
      */
     private  $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $email;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $password;
 
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $plainPassword;
 

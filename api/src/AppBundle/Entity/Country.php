@@ -10,10 +10,14 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use FOS\RestBundle\Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="country")
+ * @ExclusionPolicy("all")
  */
 class Country
 {
@@ -21,16 +25,19 @@ class Country
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @Expose
      */
     private  $id;
 
     /**
      * @ORM\Column(type="string", name="code")
+     * @Expose
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", name="label")
+     * @Expose
      */
     private $label;
 
